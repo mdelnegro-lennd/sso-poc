@@ -8,4 +8,9 @@ export class CompanyService {
         const companyRepo = getRepository(Company);
         return companyRepo.find();
     }
+
+    getById = (id: number): Promise<Company | undefined> => {
+        const companyRepo = getRepository(Company);
+        return companyRepo.findOne(id);
+    }
 }
