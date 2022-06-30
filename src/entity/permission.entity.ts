@@ -2,16 +2,21 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Role } from './role.entity';
 
 @Entity()
-export class User {
+export class Permission {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    firstName: string;
+    action: string;
 
     @Column()
-    lastName: string;
+    subject: string;
 
-    @ManyToOne(() => Role)
+    @Column({
+        nullable: true,
+    })
+    conditions: string;
+
+    @ManyToOne(() => Role, (role) => role.permissions)
     role: Role;
 }

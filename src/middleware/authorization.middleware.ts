@@ -1,7 +1,6 @@
 import express from 'express';
 import { ForbiddenError } from '@casl/ability';
 import { defineAbilitiesFor } from '../ability/defineAbility';
-import { NotAuthorizedError } from '../errors';
 
 export const hasPermissions = (action: string, asset: string) => {
     return (req: express.Request, res: express.Response, next: express.NextFunction) => {

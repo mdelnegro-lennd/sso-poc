@@ -1,38 +1,16 @@
 import { AbilityBuilder, Ability } from '@casl/ability';
+import { Permission, User } from '../entity';
 
-export const defineAbilitiesFor = (user: any) => {
+export const defineAbilitiesFor = (user: User) => {
     const { can, rules, cannot } = new AbilityBuilder(Ability);
 
     if (!user) return new Ability(rules);
 
-    if (user.isAdmin) {
-        can('manage', 'all');
-    } else {
-        if (user.id === 1) {
-            can('read', 'company');
+    const permissions = user.role.permissions;
 
-            can('view', 'company', {
-                id: { $in: [2] }
-            });
-        }
-
-        if (user.id === 2) {
-            can('read', 'company');
-
-            can('view', 'company', {
-                id: { $in: [1] }
-            });
-        }
-
-        if (user.id === 3) {
-            can('read', 'company');
-        }
-
-        if (user.id === 4) {
-            console.log('hola');
-            cannot('manage', 'all');
-        }
-    }
+    permissions.forEach((permission: Permission) => {
+        can(permission.action, permission.subject, JSON.parse(permission.conditions));
+    });
 
     return new Ability(rules);
 }
