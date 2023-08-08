@@ -1,27 +1,18 @@
-import 'express-async-errors';
-import 'reflect-metadata';
-import express from 'express';
-import { createConnection } from 'typeorm';
-import { App } from './app';
-import { CompanyRoute } from './routes';
+import express from "express";
+import "express-async-errors";
+import "reflect-metadata";
+import { App } from "./app";
+import { AuthRoute, HomeRoute } from "./routes";
 
 const bootstrap = async () => {
-    const conn = await createConnection();
-    
-    const app = new App(
-        express(), 
-        [
-            new CompanyRoute()
-        ],
-    );
+  new App(express(), [new AuthRoute(), new HomeRoute()]);
 
-    const shutdown = async () => {
-        await conn.close();
-        process.exit();
-    };
-  
-    process.on('SIGTERM', shutdown);
-    process.on('SIGINT', shutdown);
-}
+  const shutdown = async () => {
+    process.exit();
+  };
+
+  process.on("SIGTERM", shutdown);
+  process.on("SIGINT", shutdown);
+};
 
 bootstrap();

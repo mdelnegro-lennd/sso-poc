@@ -1,13 +1,11 @@
-import { getRepository } from 'typeorm';
-import { User } from '../entity';
+import { getRepository } from "typeorm";
+import { User } from "../entity";
 
 export class UserService {
-    constructor() {}
+  constructor() {}
 
-    getUser = (id: number): Promise<User | undefined> => {
-        const userRepo = getRepository(User);
-        return userRepo.findOne(id, {
-            relations: ['role', 'role.permissions']
-        });
-    }
+  getUser = (id: number): Promise<User | undefined> => {
+    const userRepo = getRepository(User);
+    return userRepo.findOne(id);
+  };
 }
