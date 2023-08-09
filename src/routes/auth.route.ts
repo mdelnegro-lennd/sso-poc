@@ -13,26 +13,16 @@ export class AuthRoute extends RouteConfig {
   protected initializeRoutes(): void {
     this.router.get(
       `${this.path}/sso/saml/login`,
-      passport.authenticate("samlStrategy", {
-        failureRedirect: "/api",
-        failureFlash: true,
+      passport.authenticate("saml", {
+        successRedirect: "/",
+        failureRedirect: "/login",
       })
     );
 
     this.router.post(
-      `${this.path}/sso/saml/acs`,
-      passport.authenticate("samlStrategy", {
-        failureRedirect: "/api",
-        failureFlash: true,
-      }),
-      this.authController.acs
-    );
-
-    this.router.post(
       `${this.path}/sso/saml/callback`,
-      passport.authenticate("samlStrategy", {
-        failureRedirect: "/api",
-        failureFlash: true,
+      passport.authenticate("saml", {
+        failureRedirect: "/login",
       }),
       this.authController.callback
     );
@@ -41,5 +31,7 @@ export class AuthRoute extends RouteConfig {
       `${this.path}/sso/saml/metadata`,
       this.authController.metadata
     );
+
+    this.router.get(`${this.path}/sso/saml/logout`, this.authController.logout);
   }
 }

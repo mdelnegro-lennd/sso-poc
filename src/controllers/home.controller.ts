@@ -8,6 +8,14 @@ export class HomeController {
     res: express.Response,
     next: express.NextFunction
   ) => {
-    res.send("Welcome!");
+    res.render("home", { username: req.user ? req.user.email : "N/A" });
+  };
+
+  login = (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    res.render("login");
   };
 }

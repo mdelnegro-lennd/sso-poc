@@ -8,6 +8,9 @@ declare global {
       // Patch express.Request to match what @node-saml/passport-saml expects
       // (Monitor https://github.com/node-saml/passport-saml/issues/549 to see if this improves)
       samlLogoutRequest: Profile;
+      user: { email; string };
+      session: any;
+      logout: any;
     }
 
     export interface User {
